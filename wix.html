@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIMO - One-stop application service for studying in China</title>
+    <!-- 添加Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        
+        /* 更新全局颜色变量 - 活泼色彩方案 */
+        :root {
+            --primary-color: #FF5722; /* 活力橙色 */
+            --secondary-color: #2196F3; /* 亮蓝色 */
+            --accent-color: #FFC107; /* 黄色强调色 */
+            --dark-color: #37474F; /* 深灰蓝色 */
+            --light-color: #ECEFF1; /* 浅灰色 */
+        }
+        
+        /* 导航栏样式优化 */
+        .nav-container {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 10px 0;
+        }
+        
+        /* 导航内容布局优化 */
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+        }
+        
+        /* 站点标题样式 - 调大字体 */
+        .site-title {
+            font-size: 36px; /* 从28px增大到36px */
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            /* 添加额外样式使其更加突出 */
+            padding: 0 5px;
+            position: relative;
+            line-height: 1;
+        }
+        
+        /* 导航右侧容器 */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        /* 调整导航链接样式 */
+        .nav-links {
+            display: flex;
+            gap: 40px; /* 增加链接间距 */
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 5px 5px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        /* 导航链接悬停效果 - 更新颜色 */
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color); /* 活力橙色下划线 */
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* 修改按钮样式 - 更活泼的颜色 */
+        .action-button {
+            background: var(--primary-color); /* 活力橙色按钮 */
+            color: white;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 4px; /* 添加圆角 */
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3); /* 按钮阴影 */
+        }
+        
+        .action-button:hover {
+            background: #E64A19; /* 深橙色 */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 87, 34, 0.4);
+        }
+        
+        /* 英雄区块样式优化 - 更活泼的渐变背景 */
+        .hero {
+            background: linear-gradient(135deg, #FF5722, #FF9800);
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            font-weight: 300;
+        }
+        
+        /* 内容容器优化 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px; /* 增加垂直内边距 */
+        }
+        
+        /* 章节样式优化 */
+        .section {
+            margin-bottom: 100px; /* 增加章节间距 */
+        }
+        
+        /* 章节标题样式优化 - 更新颜色 */
+        .section-title {
+            font-size: 38px;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--primary-color); /* 活力橙色标题 */
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        /* 添加标题下划线 - 更新颜色 */
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color); /* 活力橙色下划线 */
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 子标题样式优化 - 更新颜色 */
+        .section-subtitle {
+            font-size: 30px;
+            margin-bottom: 40px;
+            color: var(--secondary-color); /* 亮蓝色子标题 */
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        /* 段落文本样式 */
+        .section p {
+            margin-bottom: 30px;
+            font-size: 17px;
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        /* 特点卡片容器优化 */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        /* 特点卡片样式优化 - 添加柔和边框 */
+        .feature-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 350px;
+            background: white;
+            border-radius: 8px; /* 恢复圆角 */
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--primary-color); /* 活力橙色顶部边框 */
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--primary-color); /* 活力橙色标题 */
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            font-size: 15px;
+            line-height: 1.7;
+            text-align: left;
+        }
+        
+        /* 服务部分优化 - 采用原网站的布局 */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        /* 服务卡片样式优化 - 更活泼的设计 */
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--secondary-color); /* 亮蓝色左侧边框 */
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.05), transparent);
+            transition: height 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card:hover:before {
+            height: 100%;
+        }
+        
+        /* 服务序号样式 - 更活泼的颜色 */
+        .service-number {
+            font-size: 40px;
+            color: var(--accent-color); /* 黄色强调色 */
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .service-card h3 {
+            color: var(--primary-color); /* 活力橙色标题 */
+            margin-bottom: 15px;
+        }
+        
+        .service-card p {
+            font-size: 15px;
+            text-align: left;
+            line-height: 1.7;
+        }
+        
+        /* 客户展示区域优化 */
+        .clients {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 60px;
+            margin: 60px 0;
+        }
+        
+        /* 客户logo样式优化 */
+        .client-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 160px;
+            transition: transform 0.3s ease;
+        }
+        
+        .client-logo:hover {
+            transform: translateY(-5px);
+        }
+        
+        .client-logo img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        
+        .client-logo h6 {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* 联系表单区域样式优化 */
+        .contact-section {
+            background: linear-gradient(135deg, #0D47A1, #2196F3); /* 蓝色渐变背景 */
+            padding: 80px 20px;
+        }
+        
+        .contact-section .section-title {
+            color: white;
+        }
+        
+        .contact-section .section-title:after {
+            background: white;
+        }
+        
+        /* 联系表单容器优化 */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 联系表单样式优化 - 更活泼的按钮 */
+        .contact-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 表单组样式优化 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        /* 表单输入框边框色 */
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E0E0E0;
+            border-radius: 0; /* 方形输入框 */
+            font-size: 15px;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 180px; /* 增加文本区域高度 */
+            resize: vertical;
+        }
+        
+        /* 提交按钮样式优化 - 更鲜艳的颜色 */
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background: #E64A19;
+            box-shadow: 0 6px 12px rgba(255, 87, 34, 0.4);
+        }
+        
+        /* 页脚部分优化 - 更新颜色 */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 20px 20px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding: 0 20px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .footer-description {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .footer-heading {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .footer-contact {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        /* 版权信息样式 */
+        .copyright {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #777;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 响应式设计优化 */
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .services {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .site-title {
+                font-size: 32px; /* 在小屏幕上稍微小一点 */
+            }
+        }
+        
+        /* CLIENTS部分 - 添加背景图片并修改布局为3x2 */
+        .clients-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('./background/back6.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            border-radius: 8px; 
+            margin: 40px auto 60px;
+            padding: 60px 40px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 1200px;">
+        
+        /* 添加样式以确保logo正确显示 */
+        .client-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+        }
+        
+        .client-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .client-logo img {
+            max-width: 100%;
+            height: auto;
+            max-height: 100px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+        
+        .client-logo h6 {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        /* OUR PARTNERS部分 - 对齐背景与缩小图片 */
+        .partners-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./background/back6.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px; 
+            margin: 40px auto 60px;
+            padding: 60px 40px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 1200px; /* 与其他区块对齐 */
+            overflow: hidden; /* 确保内容不溢出 */
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 500px; /* 缩小到500px */
+            margin: 0 auto;
+        }
+
+        .partner-card {
+            background: white;
+            border-radius: 6px;
+            padding: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100px; /* 缩小高度 */
+        }
+
+        .partner-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 55%; /* 稍微扁平一些 */
+            overflow: hidden;
+            border-radius: 4px;
+            background-color: white;
+            margin-bottom: 6px;
+        }
+
+        .hover-scale {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 60%; /* 进一步缩小 */
+            max-height: 60%; /* 进一步缩小 */
+            width: auto;
+            height: auto;
+            transition: transform 0.3s ease;
+            filter: grayscale(30%);
+        }
+
+        .partner-card:hover .hover-scale {
+            transform: translate(-50%, -50%) scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .uni-name {
+            font-size: 12px;
+            color: #34495e;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .partner-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                max-width: 350px;
+            }
+
+            .partner-card {
+                min-height: 90px;
+            }
+
+            .uni-name {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .partner-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 250px;
+            }
+
+            .partner-card {
+                min-height: 80px;
+                padding: 6px;
+            }
+            
+            .logo-container {
+                padding-top: 50%;
+            }
+        }
+
+        /* 第7个区块 - CONTACT US 分栏和图片修复 */
+        .contact-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('./background/back7.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px; 
+            margin: 40px auto 60px;
+            padding: 60px 40px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 半透明装饰图形 */
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, rgba(0,150,225,0.2) 100%);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, rgba(0,150,225,0.2) 100%);
+            border-radius: 50%;
+            bottom: -80px;
+            left: -80px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        /* 内容容器 */
+        .contact-section .contact-container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* 左侧图片展示区 */
+        .contact-images {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .image-card {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .hover-zoom:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 右侧表单和联系信息 */
+        .contact-form-info {
+            flex: 1.5;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-color-dark, #0081c2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 130, 200, 0.2);
+        }
+        
+        /* 联系信息部分 */
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            align-items: flex-start;
+            padding: 5px 10px;
+        }
+        
+        .contact-item i {
+            color: var(--primary-color);
+            min-width: 24px;
+            margin-right: 10px;
+        }
+        
+        .contact-item p {
+            margin: 0;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .contact-images {
+                margin-bottom: 20px;
+            }
+            
+            .image-gallery {
+                flex-direction: row;
+                height: 200px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-section {
+                padding: 40px 25px;
+            }
+            
+            .image-gallery {
+                height: 180px;
+            }
+            
+            .info-card, form {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .contact-section {
+                padding: 30px 15px;
+            }
+            
+            .image-gallery {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .image-card {
+                height: 160px;
+            }
+            
+            .info-card {
+                flex-direction: column;
+            }
+            
+            .contact-item {
+                min-width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <!-- 添加ZIMO文本到左侧 -->
+            <div class="site-title">ZIMO</div>
+            
+            <!-- 导航链接和按钮放入右侧容器 -->
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#why-zimo">Why ZIMO</a>
+                    <a href="#services">Our Services</a>
+                    <a href="#resources">Resources</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <button class="action-button">Enroll Now</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Why ZIMO部分 - 修复背景图片 -->
+    <section id="why-zimo" class="section" style="
+        background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('./background/back1.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        border-radius: 8px; 
+        margin: 40px auto 60px;
+        padding: 60px 40px; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        max-width: 1200px;">
+        <h2 class="section-title">Why ZIMO</h2>
+        <p>ZIMO is a platform providing one-stop application service for studying in China which integrates everything a student needs from the beginning to the end of his or her study in China. ZIMO is the most trustworthy one-stop application platform for study in China.</p>
+        
+        <h3 class="section-subtitle">Most Universities and Programs</h3>
+        <p>When applying for universities to study abroad, the most important thing is to choose the right university and program. You will need to compare different choices before you can make the best choice and find the one that deserves you to spend 4 or more years in it. Services like CUCAS have the advantage of owning a lot of universities and programs online, and among all of them, CUCAS is the one that has most of them.</p>
+        
+        <!-- 特点卡片 - 大学和项目 -->
+        <div class="features">
+            <!-- 大学合作特点 -->
+            <div class="feature-card">
+                <h3>400+ Universities</h3>
+                <p>ZIMO cooperate with more than 400 universities and colleges in China, and the number is consistently growing every year. From associate colleges to universities, private training organizations to public universities, you can always find the best one you want from abundant choices on ZIMO.</p>
+            </div>
+            
+            <!-- 自费项目特点 -->
+            <div class="feature-card">
+                <h3>30,000+ Self-sponsored Programs</h3>
+                <p>Thanks to our partner universities and colleges, we have more than 30,000 programs for you to choose. No matter short term summer camp or Ph.D. program, you can always find the one you want.</p>
+            </div>
+            
+            <!-- 奖学金项目特点 -->
+            <div class="feature-card">
+                <h3>6,000+ Scholarship Programs</h3>
+                <p>Scholarships are quite attractive for some international students. To make applying for scholarships easier, ZIMO has cooperated with more than 100 universities in China, all of those universities have put their scholarship programs on ZIMO China scholarship platform(Fu Scholarship), and you can easily choose from them and apply.</p>
+            </div>
+        </div>
+        
+        <!-- 信誉度优势 -->
+        <h3 class="section-subtitle">Most Trustworthy</h3>
+        <p>Applying for Chinese university is a serious job which you need to find a trustworthy organization to do, ZIMO has been in this industry for more than 10 years, one of the many foundations that keep ZIMO developing is the trust we got from over one million users.</p>
+        
+        <!-- 特点卡片 - 信誉度 -->
+        <div class="features">
+            <!-- 广泛认可特点 -->
+            <div class="feature-card">
+                <h3>Widely Recognized</h3>
+                <p>ZIMO is recognized as qualified partners by most Chinese universities, official organizations as well as international organizations.</p>
+            </div>
+            
+            <!-- 用户选择特点 -->
+            <div class="feature-card">
+                <h3>Most People's Choice</h3>
+                <p>ZIMO gains the most trust from international students and is the most students' choice for applying for Chinese universities online. Every year, more than 100,000 international students register on the ZIMO to join our big family which is consist of more than 800,000 students from over 200 countries and regions; and every year more than 4,000 students submit their applications on ZIMO. We are most people's choice in this industry.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Most Universities and Programs部分 - 添加背景图片 -->
+    <section class="section" style="
+        background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('./background/back2.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        border-radius: 8px; 
+        margin: 40px auto 60px;
+        padding: 60px 40px; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        max-width: 1200px;">
+        <h2 class="section-title">Most Universities and Programs</h2>
+        <p>ZIMO provides almost all universities and their programs in China. You can find in ZIMO whatever universities and programs you want to study in China. It's a pity that currently, we can only show some programs from some universities on the website, but we are working hard on updating it. Additionally, we often know more Chinese universities and their programs than what we can show on the website.</p>
+
+        <!-- 主要特点卡片 -->
+        <div class="features">
+            <!-- 特点卡片1 -->
+            <div class="feature-card">
+                <h3>985 Project Universities</h3>
+                <p>ZIMO can help you apply to elite 985 Project universities in China, which represent the highest tier of Chinese higher education institutions.</p>
+            </div>
+            
+            <!-- 特点卡片2 -->
+            <div class="feature-card">
+                <h3>Double First-Class Universities</h3>
+                <p>ZIMO provides services for Double First-Class universities, which are part of China's initiative to create world-class universities and disciplines.</p>
+            </div>
+            
+            <!-- 特点卡片3 -->
+            <div class="feature-card">
+                <h3>C9 League Universities</h3>
+                <p>ZIMO offers application services to China's C9 League universities, which are similar to the Ivy League in the United States.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Most Trustworthy部分 - 添加背景图片 -->
+    <section class="section" style="
+        background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('./background/back3.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        border-radius: 8px; 
+        margin: 40px auto 60px;
+        padding: 60px 40px; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        max-width: 1200px;">
+        <h2 class="section-title">Most Trustworthy</h2>
+        <p>ZIMO is the most trustworthy one-stop application platform for study in China; ZIMO is the most open and transparent one, and we are not like other organizations, agencies or individuals who make a bunch of empty promises but disappear after they got the money.</p>
+        
+        <!-- 主要特点卡片 -->
+        <div class="features">
+            <!-- 特点卡片1 -->
+            <div class="feature-card">
+                <h3>University-Based</h3>
+                <p>ZIMO is the only one university based application service for students to study in China, which means we know Chinese universities and the application processes better than anybody else and can give a student professional advice.</p>
+            </div>
+            
+            <!-- 特点卡片2 -->
+            <div class="feature-card">
+                <h3>Always There</h3>
+                <p>In ZIMO, you don't need to worry about what will happen if you have some problems. We are always here; this is our advantage over other agencies, as we are not running a hit-and-run business for short-term profit and we always act in the long-term interest of students.</p>
+            </div>
+            
+            <!-- 特点卡片3 -->
+            <div class="feature-card">
+                <h3>Expert Team</h3>
+                <p>ZIMO is established and operated by a group of educators and professors from top Chinese universities, which ensures we have the professional educational background, deep understanding of Chinese universities and of Chinese society, and expert knowledge in different academic fields to meet your needs.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Services部分 - 修改布局为3x2 -->
+    <section id="services" class="section" style="
+        background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('./background/back4.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        border-radius: 8px; 
+        margin: 40px auto 60px;
+        padding: 60px 40px; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        max-width: 1200px;">
+        <h2 class="section-title">Our Services</h2>
+        <p>ZIMO integrates everything into a simple and clear process for students. We do all the complicated tasks in the background.</p>
+        
+        <!-- 服务卡片容器 - 调整为网格布局 -->
+        <div class="services-container" style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 25px;
+            margin-top: 40px;">
+            
+            <!-- 第一行 -->
+            <!-- 服务卡片1 -->
+            <div class="service-card">
+                <div class="service-number">01</div>
+                <h3>University & Program Selection</h3>
+                <p>We help you select the right university and program based on your academic background, career goals, and personal preferences.</p>
+            </div>
+            
+            <!-- 服务卡片2 -->
+            <div class="service-card">
+                <div class="service-number">02</div>
+                <h3>Application Preparation</h3>
+                <p>We assist you with preparing all required documents, including personal statements, recommendations, and portfolios.</p>
+            </div>
+            
+            <!-- 服务卡片3 -->
+            <div class="service-card">
+                <div class="service-number">03</div>
+                <h3>Application Submission</h3>
+                <p>We handle the entire application submission process, ensuring all materials are submitted correctly and on time.</p>
+            </div>
+            
+            <!-- 第二行 -->
+            <!-- 服务卡片4 -->
+            <div class="service-card">
+                <div class="service-number">04</div>
+                <h3>Visa Guidance</h3>
+                <p>We provide guidance and support throughout the visa application process to help you secure your study visa for China.</p>
+            </div>
+            
+            <!-- 服务卡片5 -->
+            <div class="service-card">
+                <div class="service-number">05</div>
+                <h3>Pre-Departure Support</h3>
+                <p>We offer pre-departure orientation and support to prepare you for your study experience in China.</p>
+            </div>
+            
+            <!-- 服务卡片6 -->
+            <div class="service-card">
+                <div class="service-number">06</div>
+                <h3>On-Arrival Assistance</h3>
+                <p>We provide on-arrival support to help you settle in and navigate the early stages of your life in China.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Most Transparent部分 - 添加背景图片 -->
+    <section class="section" style="
+        background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('./background/back5.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        border-radius: 8px; 
+        margin: 40px auto 60px;
+        padding: 60px 40px; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        max-width: 1200px;">
+        <h2 class="section-title">Most Transparent</h2>
+        <p>Most organizations and agencies in this industry don't show key information online, such as price and programs, and they would like to trade "guaranteed admission" at a high price to get benefit quickly. ZIMO, on the other hand, is the most transparent one in this industry.</p>
+        
+        <!-- 透明度特点卡片 -->
+        <div class="features">
+            <!-- 费用透明特点 -->
+            <div class="feature-card">
+                <h3>Transparent Fees & Pricing</h3>
+                <p>ZIMO never hide application fee and service fee of a program. You can see the application fee and service fee of a program on the page of it. So you can know what you need to pay from the beginning, and we don't charge any hidden charges.</p>
+            </div>
+            
+            <!-- 信息透明特点 -->
+            <div class="feature-card">
+                <h3>Transparent Information</h3>
+                <p>We don't hide any information we know. Our team keeps updating our website to try our best to show you the latest information about Chinese universities, and we even show information that maybe not so good for the conversion rate, we show it only if we think it is important for students, and we never promise students what we can't do, for example, so-called "guaranteed admission" you can see almost at everywhere.</p>
+            </div>
+            
+            <!-- 政策透明特点 -->
+            <div class="feature-card">
+                <h3>Transparent Policy</h3>
+                <p>Our policies are also clear and transparent; instead of hiding them at somewhere difficult to be found, we put our policies at places where students need to see, for example, the refund policy in the program page and the application process.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- OUR PARTNERS部分 - 对齐背景与缩小图片 -->
+    <section class="section partners-section" style="
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./background/back6.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px; 
+        margin: 40px auto 60px;
+        padding: 60px 40px; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        max-width: 1200px; /* 与其他区块对齐 */
+        overflow: hidden; /* 确保内容不溢出 */
+        ">
+        
+        <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+            <h2 class="section-title">OUR PARTNERS</h2>
+            <h3 class="section-subtitle">Working With the Best</h3>
+        </div>
+
+        <!-- 进一步缩小的网格布局 -->
+        <div class="partner-grid" style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 500px; /* 缩小到500px */
+            margin: 0 auto;">
+            
+            <!-- 清华大学 -->
+            <div class="partner-card">
+                <div class="logo-container">
+                    <img src="logo/tsinghua-logo.png" alt="Tsinghua University" class="hover-scale">
+                </div>
+                <div class="uni-name">Tsinghua</div>
+            </div>
+
+            <!-- 浙江大学 -->
+            <div class="partner-card">
+                <div class="logo-container">
+                    <img src="logo/zhejiang-logo.png" alt="Zhejiang University" class="hover-scale">
+                </div>
+                <div class="uni-name">Zhejiang</div>
+            </div>
+
+            <!-- 北京大学 -->
+            <div class="partner-card">
+                <div class="logo-container">
+                    <img src="logo/peking-logo.png" alt="Peking University" class="hover-scale">
+                </div>
+                <div class="uni-name">Peking</div>
+            </div>
+
+            <!-- 人民大学 -->
+            <div class="partner-card">
+                <div class="logo-container">
+                    <img src="logo/renmin-logo.png" alt="Renmin University" class="hover-scale">
+                </div>
+                <div class="uni-name">Renmin</div>
+            </div>
+
+            <!-- 复旦大学 -->
+            <div class="partner-card">
+                <div class="logo-container">
+                    <img src="logo/fudan-logo.png" alt="Fudan University" class="hover-scale">
+                </div>
+                <div class="uni-name">Fudan</div>
+            </div>
+
+            <!-- 中国科技大学 -->
+            <div class="partner-card">
+                <div class="logo-container">
+                    <img src="logo/ustc-logo.png" alt="USTC" class="hover-scale">
+                </div>
+                <div class="uni-name">USTC</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系表单部分 -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <h2 class="section-title">Leave us a message and we'll get back to you.</h2>
+            
+            <!-- 联系表单 -->
+            <form class="contact-form">
+                <!-- 姓名和国籍行 -->
+                <div class="form-row" style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="nation">Nation</label>
+                        <input type="text" id="nation" name="nation" required>
+                    </div>
+                </div>
+                
+                <!-- 邮箱和学位行 -->
+                <div class="form-row" style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="degree">Degree</label>
+                        <select id="degree" name="degree" required>
+                            <option value="">Select Degree</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Master">Master</option>
+                            <option value="PhD">PhD</option>
+                            <option value="Language">Language Program</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 消息文本区域 -->
+                <div class="form-group">
+                    <label for="message">Type your message here...</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                
+                <!-- 提交按钮 -->
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- 页脚部分 -->
+    <footer>
+        <div class="footer-container">
+            <!-- 公司信息区域 -->
+            <div>
+                <div class="footer-logo">ZIMO</div>
+                <p class="footer-description">One-stop application service for studying in China</p>
+                <p>Join The Success!</p>
+            </div>
+            
+            <!-- 联系信息区域 -->
+            <div>
+                <h3 class="footer-heading">Info</h3>
+                <p class="footer-contact">WA：+853 65737040</p>
+                <p class="footer-contact">zhimou.liao@zimo.club</p>
+            </div>
+            
+            <!-- 地址信息区域 -->
+            <div>
+                <h3 class="footer-heading">Address</h3>
+                <p>Unit 210A, Building 1, Bai'anlong Industrial Building,<br>
+                No.4 Haiwan Road, Wawan Community,<br>
+                Zhaoshang Street, Nanshan District, Shenzhen</p>
+            </div>
+        </div>
+        
+        <!-- 版权信息 -->
+        <div class="copyright">
+            © 2035 by Zimo. One-stop application service for studying in China
+        </div>
+    </footer>
+</body>
+</html>
